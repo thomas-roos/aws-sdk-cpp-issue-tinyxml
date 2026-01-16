@@ -13,15 +13,26 @@ podman build -t yocto-meta-aws-ubuntu2404 --build-arg BASE_IMAGE=ubuntu:24.04 -f
 podman build -t yocto-meta-aws-ubuntu2510 --build-arg BASE_IMAGE=ubuntu:25.10 -f Containerfile .
 ```
 
+For different machine architectures:
+```bash
+podman build -t yocto-meta-aws-riscv64 --build-arg MACHINE=qemuriscv64 -f Containerfile .
+podman build -t yocto-meta-aws-ubuntu2404-riscv64 --build-arg BASE_IMAGE=ubuntu:24.04 --build-arg MACHINE=qemuriscv64 -f Containerfile .
+```
+
 ## Run Build Environment
 
 ```bash
 ./run.sh ubuntu2404 yocto-meta-aws
 ```
 
+Optional: Specify machine architecture (default: qemux86-64):
+```bash
+./run.sh ubuntu2404 yocto-meta-aws qemuriscv64
+```
+
 ## Build aws-sdk-cpp
 
-Inside the container:
+Inside the container (replace `qemux86-64` with your machine architecture if different):
 
 ```bash
 cd /workspace/bitbake-builds/poky-without-meta-aws-poky-with-sstate-distro_poky-altcfg-machine_qemux86-64/build
@@ -51,3 +62,6 @@ bitbake aws-sdk-cpp
 - Meta-aws: master-next branch
 - Sstate: Enabled (CDN mirror)
 - Build directory: `/workspace/bitbake-builds/poky-without-meta-aws-poky-with-sstate-distro_poky-altcfg-machine_qemux86-64/build`
+
+
+## Build for RISV-64

@@ -21,8 +21,10 @@ WORKDIR /workspace
 
 ENV PATH="/bitbake-akanavin-bitbake-setup/bin:${PATH}"
 
-RUN git clone -b master-next https://github.com/aws4embeddedlinux/meta-aws.git \
-    && bitbake-setup --setting default top-dir-prefix /workspace init --non-interactive /workspace/meta-aws/.github/workflows/poky-without-meta-aws.conf.json poky-with-sstate distro/poky-altcfg machine/qemux86-64
+ARG MACHINE=qemux86-64
+
+RUN git clone -b whinlatter https://github.com/aws4embeddedlinux/meta-aws.git \
+    && bitbake-setup --setting default top-dir-prefix /workspace init --non-interactive /workspace/meta-aws/.github/workflows/poky-without-meta-aws.conf.json poky-with-sstate distro/poky-altcfg machine/${MACHINE}
 
 ENV LANG=en_US.UTF-8 \
     LC_ALL=en_US.UTF-8
